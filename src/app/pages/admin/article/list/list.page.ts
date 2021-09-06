@@ -13,7 +13,7 @@ import {AppListBaseComponent} from '../../../../@shared/components/base/base.com
 export class AdminArticleListPage extends AppListBaseComponent {
   @HostBinding('class') classes = 'ion-page';
   items;
-  displayedColumns: string[] = ['select', 'id', 'title_' + this.lan, 'actions'];
+  displayedColumns: string[] = ['select', 'id', 'title_' + this.lan, 'menu', 'actions'];
   menu = this.route.snapshot.queryParams.menu;
 
   constructor(private injector: Injector,
@@ -31,6 +31,10 @@ export class AdminArticleListPage extends AppListBaseComponent {
     this.articleSvc.find(body).subscribe(res => {
       this.dataSource = new MatTableDataSource(res);
     });
+  }
+
+  applyFilter(filterValue: string): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   addArticle(): void {
@@ -56,7 +60,9 @@ export class AdminArticleListPage extends AppListBaseComponent {
       cancel: this.translate('cancel')
     }).subscribe(info => {
       if (info.value) {
-        this.articleSvc.delete(row.id).subscribe();
+        this.articleSvc.delete(row.id).subscribe(() => {
+          this.getData();
+        });
       }
     });
   }

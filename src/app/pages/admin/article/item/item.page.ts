@@ -14,6 +14,7 @@ export class AdminArticleItemPage extends AppItemBaseComponent {
   orderKeys = [
     'title_' + this.lan,
     'menu',
+    'custom_types',
     'description_' + this.lan,
     'thumb',
     'keywords',
@@ -29,6 +30,7 @@ export class AdminArticleItemPage extends AppItemBaseComponent {
     super(injector);
     this.init('article', this.orderKeys);
     this.form.get('menu').setValue(Number(this.menu));
+    this.form.get('published_at').setValue(new Date());
   }
 
   filterCustomType(): void {

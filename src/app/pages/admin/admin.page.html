@@ -20,9 +20,6 @@
         <mat-list-item routerLink="/admin/address/list" routerLinkActive="active">
           <p mat-line>{{translate('Address Manage')}}</p>
         </mat-list-item>
-        <mat-list-item routerLink="/admin/contentType/list" routerLinkActive="active">
-          <p mat-line>{{translate('ContentType Manage')}}</p>
-        </mat-list-item>
         <mat-divider></mat-divider>
       </ng-container>
       <ng-container *ngIf="user.type !== 'employee'">

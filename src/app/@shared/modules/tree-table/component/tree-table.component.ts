@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, ElementRef, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, OnChanges, ElementRef, SimpleChanges, EventEmitter} from '@angular/core';
 import {Node, TreeTableNode, Options, SearchableNode} from '../models';
 import {TreeService} from '../services/tree/tree.service';
 import {MatTableDataSource} from '@angular/material/table';
@@ -14,7 +14,7 @@ import {Subject} from 'rxjs';
   templateUrl: './tree-table.component.html',
   styleUrls: ['./tree-table.component.scss']
 })
-export class TreeTableComponent<T> implements OnInit {
+export class TreeTableComponent<T> implements OnInit, OnChanges {
   @Input() tree: Node<T> | Node<T>[];
   @Input() options: Options<T> = {};
   @Input() hiddenButton = false;
@@ -40,6 +40,16 @@ export class TreeTableComponent<T> implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getData();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.tree) {
+      this.getData();
+    }
+  }
+
+  getData(): void {
     this.tree = Array.isArray(this.tree) ? this.tree : [this.tree];
     this.options = this.parseOptions(defaultOptions);
     const customOrderValidator = this.validatorService.validateCustomOrder(

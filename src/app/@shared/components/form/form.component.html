@@ -48,7 +48,7 @@
                         [medias]="selector[item.key]"></app-uploader>
         </div>
         <mat-form-field [floatLabel]="floatLabelType"
-                        *ngIf="item.attributes.type === 'relation' && item.key !== 'custom_type'"
+                        *ngIf="item.attributes.type === 'relation' && (item.key !== 'custom_type' && item.key !== 'custom_types')"
                         appearance="outline"
                         class="full-width">
           <mat-label>{{translate(item.key)}}</mat-label>
@@ -59,9 +59,9 @@
                         [value]="option.id">{{option['name_' + lan] || option['title_' + lan] || option['name'] || option['title']}}</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field class="{{item.key === 'custom_type' ? 'custom_type' : ''}}"
+        <mat-form-field class="{{item.key === 'custom_type' || 'custom_types' ? 'custom_type' : ''}}"
                         [floatLabel]="floatLabelType"
-                        *ngIf="item.attributes.type === 'relation' && item.key === 'custom_type'"
+                        *ngIf="item.attributes.type === 'relation' && (item.key === 'custom_type' || item.key === 'custom_types')"
                         appearance="outline"
                         class="full-width">
           <mat-label>{{translate(item.key)}}</mat-label>

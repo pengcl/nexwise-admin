@@ -10,7 +10,6 @@ export class AdminSettingPage extends AppItemBaseComponent {
   @HostBinding('class') classes = 'ion-page';
   orderKeys = [
     'name_' + this.lan,
-    'phone',
     'language',
     'icp',
     'wechat',

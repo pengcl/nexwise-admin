@@ -1,6 +1,5 @@
-import {Component, HostBinding, Injector} from '@angular/core';
+import {Component, NgZone, HostBinding, Injector} from '@angular/core';
 import {ToastController} from '@ionic/angular';
-import {listToTable} from '../../../../@core/utils/extend';
 import {AppListBaseComponent} from '../../../../@shared/components/base/base.component';
 import {isObject} from 'lodash-es';
 
@@ -23,7 +22,7 @@ const listToTree = (items, keys, lan) => {
       })(),
       children: [],
       isExpanded: false,
-      isVisible: true,
+      isVisible: true
     });
   });
   is.forEach(element => {
@@ -42,23 +41,6 @@ const listToTree = (items, keys, lan) => {
   return is;
 };
 
-/*const listToTree = (items, keys: any[]) => {
-  let is = listToTable(items, keys, 'menu');
-  is.forEach(element => {
-    const parentId = element.parentId;
-    if (parentId !== '') {
-      is.forEach(ele => {
-        if (ele.id === parentId) { // 当内层循环的ID== 外层循环的parendId时，（说明有children），需要往该内层id里建个children并push对应的数组；
-          element.isVisible = false;
-          element.isExpanded = false;
-          ele.children.push(element);
-        }
-      });
-    }
-  });
-  is = is.filter(i => !i.parentId); // 这一步是过滤，按树展开，将多余的数组剔除；
-  return is;
-};*/
 
 @Component({
   selector: 'app-admin-menu-list',
@@ -88,7 +70,7 @@ export class AdminMenuListPage extends AppListBaseComponent {
         {name: this.translate('template'), code: 'template'}
       ], this.lan);
       this.items = items;
-      console.log(this.items);
+      this.items = [...this.items];
     });
   }
 
@@ -118,13 +100,12 @@ export class AdminMenuListPage extends AppListBaseComponent {
 
   delMenu(e): void {
     this.dialogSvc.show({content: '您确定要删除这条信息吗？', confirm: '是的', cancel: '不了'}).subscribe(info => {
-      console.log(info);
       if (info.value) {
-        /*this.menuSvc.delete(e.id).subscribe(res => {
+        this.menuSvc.delete(e.id).subscribe(res => {
           if (res) {
             this.presentToast().then();
           }
-        });*/
+        });
       }
     });
   }

@@ -8,11 +8,17 @@
 </ion-header>
 <ion-content [fullscreen]="true">
   <div class="container">
-    <ion-grid>
+    <ion-grid class="table-actions ion-no-padding" style="margin: 10px">
       <ion-row>
-        <ion-col size="3">
+        <ion-col>
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" [placeholder]="translate('search') + ' ' + translate('article') + ' ' + translate('title')">
+          </mat-form-field>
+        </ion-col>
+        <ion-col size="auth">
           <div class="actions">
             <button (click)="addArticle()" mat-raised-button color="primary">{{translate('add')}}</button>
+            <!--<button mat-raised-button color="warn">删除</button>-->
           </div>
         </ion-col>
       </ion-row>
@@ -47,7 +53,15 @@
               {{translate('title')}}
             </th>
             <td mat-cell *matCellDef="let row">
-              <a (click)="handleToEdit(row)">{{row['title_' + lan]}}</a>
+              <a href="javascript:;" (click)="handleToEdit(row)">{{row['title_' + lan]}}</a>
+            </td>
+          </ng-container>
+          <ng-container [matColumnDef]="'menu'">
+            <th mat-header-cell *matHeaderCellDef>
+              {{translate('menu')}}
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{row['menu']['name_' + lan]}}
             </td>
           </ng-container>
           <ng-container matColumnDef="actions">
